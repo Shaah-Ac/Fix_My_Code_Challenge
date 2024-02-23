@@ -7,22 +7,25 @@
 result = []
 ARGV.each do |arg|
     # skip if not integer
-    next if arg =~ /^-?\d+$/
+    next if arg !~ /^-?[0-9]+$/
 
     # convert to integer
     i_arg = arg.to_i
     
     # insert result at the right position
     is_inserted = false
-    result.each_with_index do |num, index|
-        if i_arg < num
-            result.insert(index, i_arg)
-            is_inserted = true
-            break
-        end
-    end
+    i = 0
+    while i < result.size do
+      if result[i] <= i_arg
+        i += 1
+      else
+        result.insert(i, i_arg)
+        is_inserted = true
+        break
+      end
+  end
 
-    result << i_arg unless is_inserted
+  result << i_arg unless is_inserted
 end
 
 puts result
